@@ -1,0 +1,13 @@
+{
+    "private": true,
+    "type": "module",
+    "scripts": {
+        "dev": "npm run development",
+        "production": "npm run prod",
+        "development": "mix",
+        "prod": "mix --production"
+    },
+    "devDependencies": {
+        "axios": "^1.6.4"
+    }
+}
