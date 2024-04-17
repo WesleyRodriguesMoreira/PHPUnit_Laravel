@@ -9,4 +9,6 @@ use Illuminate\Support\Facades\Route;
 // })->middleware('auth:sanctum');
 
 Route::get('/user' , [UserController::class, 'index']);
+
+// Utilizar o "{user}" para manda para a controller
 Route::get('/user/{user}' , [UserController::class, 'show']);
