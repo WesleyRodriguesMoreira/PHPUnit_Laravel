@@ -16,9 +16,7 @@ class UserResource extends JsonResource
     {
         return [
             'idUser' => $this->id,
-            'firstNameUser' => $this->firstName,
-            'lastNameUser' => $this->lastName,
-            'fullNameUser' => $this->firstName .' '.$this->lastName,
+            'nameUser' => $this->name,
             'emailUser' => $this->email,
             'created_atUser' => \Carbon\Carbon::parse($this->created_at)->tz('America/Sao_Paulo')->format('d/m/Y H:i:s'),
             'updated_atUser' => \Carbon\Carbon::parse($this->updated_at)->tz('America/Sao_Paulo')->format('d/m/Y H:i:s'),

@@ -14,8 +14,15 @@ class UserController extends Controller{
 
     public function index(Request $request){
         try{
-            // Obtenha a lista paginada de usuários
-            $users = User::paginate(10);
+            // Realizar uma pesquisa pelo nome e e-mail
+            $users = User::when($request->has('name'),function($whenQuery) use ($request){
+                $whenQuery->where('name','like','%' . $request->name . '%');
+            })
+            ->when($request->has('email'),function($whenQuery) use ($request){
+                $whenQuery->where('email','like','%' . $request->email . '%');
+            })
+            ->orderByDesc('created_at')->paginate(3)->withQueryString();
+        
 
             // Retorne a coleção de usuários usando o UserResource
             return UserResource::collection($users);
