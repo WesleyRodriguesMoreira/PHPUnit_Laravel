@@ -12,7 +12,7 @@ use \Illuminate\Database\QueryException;
 
 class UserController extends Controller{
 
-    public function index(){
+    public function index(Request $request){
         try{
             // Obtenha a lista paginada de usuários
             $users = User::paginate(10);
@@ -37,6 +37,7 @@ class UserController extends Controller{
             return response()->json(['error' => 'Ocorreu um erro inesperado.'], 500);
         }
     }
+
 
 
     /** @var int $user Recebe o id em forma de parâmetro, que vem da rota (api.php) */
