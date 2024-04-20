@@ -12,5 +12,15 @@ Route::prefix(prefix: 'users')->group(callback: function() {
 
     // Utilizar o "{user}" para manda para a controller
     Route::get('/user/{user}' , [UserController::class, 'show']);
+
+    // Utilizar o "{user}" para manda para a controller
+    Route::get('/user/{user}' , [UserController::class, 'show']);
+
+    
+    Route::post('/user' , [UserController::class, 'store']);
 });
+
+
+
+
 

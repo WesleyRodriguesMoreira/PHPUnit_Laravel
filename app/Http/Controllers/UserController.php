@@ -2,14 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\UserRequest;
 use App\Http\Resources\UserResource;
 use App\Models\User;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use \Illuminate\Database\QueryException;
+use Illuminate\Support\Facades\Crypt;
 
 class UserController extends Controller{
+
 
     public function index(Request $request){
         try{
@@ -67,4 +70,36 @@ class UserController extends Controller{
             return response()->json(['error' => 'Ocorreu um erro inesperado.'], 500);
         }
     }
+
+
+
+
+    public function store(UserRequest $request)
+    {
+        try {
+            // Validar o Formulário
+            $validatedData = $request->validated();
+    
+            // Cadastra no Banco de Dados, na tabela contas
+            $user = User::create([
+                'nome' => $validatedData['name'],
+                'email' => $validatedData['email'],
+                'senha' => bcrypt($validatedData['password']), // Use bcrypt() para criptografar a senha de forma segura
+            ]);
+    
+            // Salva no log
+            Log::info('Usuário cadastrado com sucesso', ['id' => $user->id, 'conta' => $user]);
+    
+            // Retorne uma resposta em JSON indicando que o usuário foi cadastrado com sucesso
+            return response()->json(['message' => 'Usuário cadastrado com sucesso', 'user' => $user], 201);
+        } catch (\Exception $e) {
+            // Salva no log
+            Log::warning('Usuário não cadastrado: ' . $e->getMessage());
+    
+            // Se ocorrer qualquer outro tipo de exceção, retorne uma resposta em JSON com uma mensagem de erro genérica
+            return response()->json(['message' => 'Erro interno do servidor'], 500);
+        }
+    }
+    
+
 }
