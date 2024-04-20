@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Http\Resources\UserResource;
 use App\Models\User;
 use Exception;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use \Illuminate\Database\QueryException;
@@ -21,7 +20,7 @@ class UserController extends Controller{
             ->when($request->has('email'),function($whenQuery) use ($request){
                 $whenQuery->where('email','like','%' . $request->email . '%');
             })
-            ->orderByDesc('created_at')->paginate(3)->withQueryString();
+            ->orderByDesc('created_at')->paginate(10)->withQueryString();
         
 
             // Retorne a coleção de usuários usando o UserResource
